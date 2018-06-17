@@ -1,0 +1,81 @@
+:root {
+  --color-lightskyblue: #87CEFA;
+  --color-cerulean: #0277bd;
+  --color-magenta: #FF00E1;
+  --color-white: #ffffff;
+
+}
+
+html {
+  font-size: 10px;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background: var(--color-lightskyblue);
+}
+
+
+.body__wrapper {
+    font-size: 1.6rem;
+    transition-duration: 0.5s;
+}
+
+.header {
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  transition-duration: 1s;
+}
+
+.header__logo {
+  flex: 1 0 auto;
+  padding: 1.4rem;
+  font-size: 3rem;
+}
+
+.header__logo a {
+  color: var(--color-lightskyblue);
+  transition-duration: 0.5s;
+}
+
+.header__logo a:hover {
+  color: var(--color-magenta);
+  cursor: pointer;
+}
+
+.header__nav {
+  flex: 1 0 auto;
+}
+
+.header__menu {
+  background-color: var(--color-cerulean);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-around;
+  flex: 1 0 auto;
+  list-style-type: none;
+  font-size: 1.8rem;
+}
+
+.nav__item a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: var(--color-lightskyblue);
+  transition-duration: 0.5s;
+}
+
+.nav__item a:hover {
+  color: var(--color-magenta);
+}

@@ -1,8 +1,10 @@
 :root {
-  --color-lightskyblue: #87CEFA;
+  --color-lightskyblue: #BED7FF;
   --color-cerulean: #0277bd;
+  --color-dodgerblue: #5998ff;
   --color-magenta: #FF00E1;
-  --color-white: #ffffff;
+  --color-green: #2d9935;
+  --color-black: #000000;
 
 }
 
@@ -23,13 +25,26 @@ body {
     transition-duration: 0.5s;
 }
 
+.footer {
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  z-index: 1;
+  box-shadow: 0 0 1rem rgba(0,0,0,0.7);
+  background-color: var(--color-cerulean);
+  color: var(--color-lightskyblue);
+}
+
 .header {
   margin: 0 auto;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1;
-  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  box-shadow: 0 0 1rem rgba(0,0,0,0.7);
   transition-duration: 1s;
 }
 
@@ -78,4 +93,86 @@ body {
 
 .nav__item a:hover {
   color: var(--color-magenta);
+}
+
+.catalog {
+  display: flex;
+  margin: 8rem 0;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.catalog__item {
+  width: 20rem;
+  margin: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 2rem rgba(0,0,0,0.7);
+  transition-duration: 0.3s;
+}
+
+.catalog__item:hover {
+  box-shadow: 0 0 5rem rgba(0,0,0,0.7);
+}
+
+.cat {
+  color: var(--color-black);
+  background-color: var(--color-dodgerblue);
+}
+
+.cat__photo {
+  border-radius: 1rem 1rem 0 0;
+}
+
+.cat__name {
+  width: 10rem;
+  background-color: var(--color-lightskyblue);
+  padding: 0.4rem;
+  margin: 1rem 4.6rem 0 4.6rem;
+  border-radius: 0.7rem 0.7rem 0 0;
+  text-align: center;
+}
+
+.cat__price {
+  background-color: var(--color-lightskyblue);
+  position: absolute;
+  border-radius: 1rem 0 1rem 0;
+  padding: 0.4rem 1.5rem;
+  width: 7rem;
+  font-size: 2rem;
+  box-shadow: 0.1rem 0.5rem 1rem -0.4rem rgba(0,0,0,0.7)
+}
+
+.cat__category {
+  background-color: var(--color-lightskyblue);
+  padding: 0.5rem 1.2rem;
+}
+
+.cat__category span {
+  margin-left: 0.5rem;
+}
+
+.cat__purchase {
+  background-color: var(--color-lightskyblue);
+  border-radius: 0 0 1rem 1rem;
+  padding: 1rem;
+  margin-top: 0.1rem;
+  font-size: 2rem;
+  color: var(--color-green);
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+
+.cat__purchase:hover {
+  background-color: var(--color-green);
+  color: var(--color-black);
+}
+
+.cat__purchase-icon {
+  width: 0;
+  text-align: center;
+  transition: width 2s ease;
+}
+
+.cat__purchase:hover .cat__purchase-icon {
+  width: 100%;
 }

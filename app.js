@@ -32,6 +32,7 @@ createItems = (cats) => {
 createItem = (cat) => {
   const template = document.getElementById('cat-template').content.firstElementChild.cloneNode(true);
 
+  template.setAttribute('data-id', cat.id);
   template.querySelector('.cat__name').innerHTML = cat.name;
   template.querySelector('.cat__img').setAttribute('alt', `Cat #${cat.id} ${cat.name}`);
   template.querySelector('.cat__img').setAttribute('src', cat.img_url);
@@ -46,4 +47,11 @@ price_humanize = (price) => {
   return `$${res}`
 }
 
+loadMore = () => {
+  if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+    requestItems();
+  }
+}
+
 document.addEventListener("DOMContentLoaded", requestItems)
+document.addEventListener("scroll", loadMore)

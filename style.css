@@ -124,9 +124,13 @@ body {
   min-height: 21rem;
 }
 
+.cat__photo--noimage {
+  background-image: url("images/cat.svg");
+}
+
 .cat__photo img {
   opacity: 1;
-  transition: opacity 0.3s;
+  transition: opacity 1s;
 }
 
 .cat__photo img[data-src] {

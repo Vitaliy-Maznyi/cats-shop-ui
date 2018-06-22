@@ -38,8 +38,13 @@
     <template id="cat-template">
       <div class="cat catalog__item">
         <div class="cat__price"></div>
-        <div class="cat__photo">
-          <img class="cat__img" src="images/cat.svg" onerror="this.onerror=null;this.src='images/cat.svg';" alt="">
+        <div class="cat__photo cat__photo--noimage">
+          <img
+            class="cat__img"
+            src="#"
+            onerror="this.onerror=null;this.src='images/cat.svg';"
+            alt="default cat"
+            data-lazy>
         </div>
         <div class="cat__name"></div>
         <div class="cat__category"><i class="fas fa-bolt"></i><span></span></div>

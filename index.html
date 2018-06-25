@@ -23,7 +23,7 @@
             </ul>
           </nav>
           <div class="header__cart">
-            <button type="button">
+            <button type="button" class="js-toggle-cart">
               <i class="fas fa-shopping-cart"></i>
             </button>
           </div>
@@ -31,19 +31,19 @@
       </header>
 
       <main>
-        <div class="cart">
+        <div class="cart js-cart">
           <div class="cart__header">
             <span>cart</span>
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times js-toggle-cart"></i>
           </div>
           <div class="cart__main">
-            <ul class="cart__list"></ul>
-            <div class="cart__list--empty">
+            <ul class="cart__list js-cart-list"></ul>
+            <div class="cart__list--empty js-empty-cart">
               <i class="far fa-frown"></i>
             </div>
           </div>
           <div class="cart__footer">
-            Total: <span>0</span>
+            Total: <span>$0</span>
           </div>
         </div>
         <div class="catalog"></div>
@@ -69,9 +69,21 @@
         <div class="cat__name"></div>
         <div class="cat__category"><i class="fas fa-bolt"></i><span></span></div>
         <div class="cat__purchase">
-          <button type="button"><i class="fas fa-cart-plus"></i></button>
+          <button type="button" class="js-add-to-cart"><i class="fas fa-cart-plus"></i></button>
         </div>
       </div>
+    </template>
+
+    <template id="cart-item-template">
+      <li class="cart__item item">
+        <div class="item__name"></div>
+        <div class="item__amount">
+          <button type="button" class="minus js-decrease"><i class="fas fa-minus"></i></button>
+          <div class="amount">1</div>
+          <button type="button" class="plus js-increase"><i class="fas fa-plus"></i></button>
+        </div>
+        <button type="button" class="item__delete js-remove-item"><i class="far fa-trash-alt"></i></button>
+      </li>
     </template>
 
     <script src="app.js"></script>

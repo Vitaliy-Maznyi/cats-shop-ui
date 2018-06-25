@@ -22,10 +22,30 @@
               <li class="nav__item"><a href="#contacts">Contacts</a></li>
             </ul>
           </nav>
+          <div class="header__cart">
+            <button type="button">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+          </div>
         </div>
       </header>
 
       <main>
+        <div class="cart">
+          <div class="cart__header">
+            <span>cart</span>
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="cart__main">
+            <ul class="cart__list"></ul>
+            <div class="cart__list--empty">
+              <i class="far fa-frown"></i>
+            </div>
+          </div>
+          <div class="cart__footer">
+            Total: <span>0</span>
+          </div>
+        </div>
         <div class="catalog"></div>
       </main>
 
@@ -49,7 +69,7 @@
         <div class="cat__name"></div>
         <div class="cat__category"><i class="fas fa-bolt"></i><span></span></div>
         <div class="cat__purchase">
-          <div class="cat__purchase-icon"><i class="fas fa-cart-plus"></i></div>
+          <button type="button"><i class="fas fa-cart-plus"></i></button>
         </div>
       </div>
     </template>

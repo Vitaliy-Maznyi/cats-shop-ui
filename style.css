@@ -257,6 +257,10 @@ body {
   transition: opacity 3s ease;
 }
 
+.cart--drag-enter {
+  border: 2px dashed var(--color-black);
+}
+
 .cart--visible {
   display: flex;
 }

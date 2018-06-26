@@ -8,6 +8,7 @@ let cart = {
 }
 
 const cartList = document.querySelector('.js-cart-list')
+const cartDOM = document.querySelector('.js-cart')
 
 setToLocalStorage = (cat) => {
   let items = cart.items
@@ -56,6 +57,9 @@ createItem = (cat) => {
   const template = document.getElementById('cat-template').content.firstElementChild.cloneNode(true);
 
   template.setAttribute('data-id', cat.id);
+  template.setAttribute('draggable', 'true');
+  template.setAttribute('data-price', cat.price);
+  template.setAttribute('data-name', cat.name);
   template.querySelector('.cat__name').innerHTML = cat.name;
   template.querySelector('.cat__img').setAttribute('alt', `Cat #${cat.id} ${cat.name}`);
   template.querySelector('.cat__img').setAttribute('data-src', cat.img_url);
@@ -65,6 +69,9 @@ createItem = (cat) => {
   template.querySelector('.js-add-to-cart').addEventListener("click", () => addToCart(cat, template))
 
   if (Object.keys(cart.items).includes(cat.id.toString())) template.classList.add('added')
+
+  template.addEventListener("dragstart", handleDragStart);
+
   return template;
 }
 
@@ -123,7 +130,7 @@ isInViewport = (el) => {
 }
 
 toggleCart = () => {
-  document.querySelector('.js-cart').classList.toggle('cart--visible')
+  cartDOM.classList.toggle('cart--visible')
   toggleCartList()
 }
 
@@ -217,6 +224,38 @@ countTotalPrice = () => {
   }
 
 }
+
+handleDragStart = (e) => {
+  e.dataTransfer.setData("text", e.currentTarget.getAttribute('data-id'));
+  if (!cartDOM.classList.contains('cart--visible')) toggleCart()
+  cartDOM.classList.add('cart--drag-enter')
+}
+
+handleOverDrop = (e) => {
+  e.preventDefault();
+  if (e.type !== "drop") {
+    return;
+  }
+  const draggedId = e.dataTransfer.getData("text");
+  const draggedEl = document.querySelector("[data-id='" + draggedId + "']")
+
+  if (draggedEl.parentNode == this) {
+    cartDOM.classList.remove('cart--drag-enter');
+    return;
+  }
+  const cat = {
+    id: draggedEl.getAttribute('data-id'),
+    name: draggedEl.getAttribute('data-name'),
+    price: parseInt(draggedEl.getAttribute('data-price')),
+  }
+  addToCart(cat, draggedEl)
+  cartDOM.classList.remove('cart--drag-enter');
+}
+
+const dropTarget = document.querySelector('[data-drop-target]');
+
+dropTarget.addEventListener("dragover", handleOverDrop);
+dropTarget.addEventListener("drop", handleOverDrop);
 
 document.addEventListener("DOMContentLoaded", requestItems)
 document.addEventListener("scroll", loadMore)

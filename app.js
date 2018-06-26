@@ -4,8 +4,25 @@ let querySetting = {
 }
 
 let cart = {
-  items: {},
-  itemsAmount: {}
+  items: JSON.parse(localStorage.getItem('items')) || {},
+}
+
+const cartList = document.querySelector('.js-cart-list')
+
+setToLocalStorage = (cat) => {
+  let items = cart.items
+  items[cat.id] = {}
+  items[cat.id]['id'] = cat.id
+  items[cat.id]['name'] = cat.name
+  items[cat.id]['amount'] = 1
+  items[cat.id]['price'] = cat.price
+  localStorage.setItem('items', JSON.stringify(items))
+}
+
+removeFromLocalStorage = (catId) => {
+  let items = cart.items
+  delete items[catId]
+  localStorage.setItem('items', JSON.stringify(items))
 }
 
 requestItems = () => {
@@ -47,6 +64,7 @@ createItem = (cat) => {
 
   template.querySelector('.js-add-to-cart').addEventListener("click", () => addToCart(cat, template))
 
+  if (Object.keys(cart.items).includes(cat.id.toString())) template.classList.add('added')
   return template;
 }
 
@@ -114,39 +132,38 @@ Array.from(document.getElementsByClassName('js-toggle-cart')).forEach((el) => {
 })
 
 toggleCartList = () => {
+  cartList.innerHTML = ''
   if (Object.keys(cart.items).length === 0) {
     document.querySelector('.js-empty-cart').classList.add('show');
-    document.querySelector('.js-cart-list').classList.remove('show');
+    cartList.classList.remove('show');
   } else {
     document.querySelector('.js-empty-cart').classList.remove('show');
-    document.querySelector('.js-cart-list').classList.add('show');
+    cartList.classList.add('show');
+    Object.keys(cart.items).forEach(id => {
+      const cartItem = createCartItem(cart.items[id]);
+      cartList.appendChild(cartItem);
+    });
   }
+  countTotalPrice()
 }
 
 addToCart = (cat, catalogItem) => {
   if (Object.keys(cart.items).includes(cat.id.toString())) return null
   catalogItem.classList.add('added')
-  cart.items[cat.id] = cat.price
-  cart.itemsAmount[cat.id.toString()] = 1
-
+  setToLocalStorage(cat)
   toggleCartList()
-  countTotalPrice()
-  const cartItem = createCartItem(cat);
-  document.querySelector('.js-cart-list').appendChild(cartItem);
 }
 
 removeFromCart = (e) => {
-  const cartItem = e.target.parentElement.parentElement
+  const cartItem = e.target.closest('.cart__item')
   const catId = cartItem.dataset.catId
   if (catId) {
     cartItem.remove()
   } else {
     return null
   }
-  delete cart.items[catId]
-  delete cart.itemsAmount[catId.toString()]
+  removeFromLocalStorage(catId)
   toggleCartList()
-  countTotalPrice()
   document.querySelector(".catalog__item[data-id='" + catId + "']").classList.remove('added')
 }
 
@@ -156,6 +173,9 @@ createCartItem = (cat) => {
   template.setAttribute('data-cat-id', cat.id);
   template.querySelector('.item__name').innerHTML = cat.name;
 
+  if (cat.amount !== 1) {
+    template.querySelector('.amount').innerHTML = cat.amount;
+  }
 
   const increaseBtn = template.querySelector('.js-increase');
   increaseBtn.addEventListener('click', () => changeItemsAmount(event, 'increase'));
@@ -172,17 +192,18 @@ changeItemsAmount = (e, changeType) => {
   const counter = e.target.parentElement.parentElement.querySelector('.amount')
   let counterValue = parseInt(counter.innerHTML)
   const catId = cartItem.dataset.catId
+  let items = cart.items
   if (changeType === 'increase') {
-    cart.itemsAmount[catId] += 1
+    items[catId]['amount'] += 1
     counterValue += 1
   } else if (changeType === 'decrease') {
-    if (cart.itemsAmount[catId] === 1) return null
-    cart.itemsAmount[catId] -= 1
+    if (items[catId]['amount'] === 1) return null
+    items[catId]['amount'] -= 1
     counterValue -= 1
   }
+  localStorage.setItem('items', JSON.stringify(items))
   counter.innerHTML = counterValue.toString()
   countTotalPrice()
-
 }
 
 countTotalPrice = () => {
@@ -191,7 +212,7 @@ countTotalPrice = () => {
   if (ids.length === 0) {
     totalSpan.innerHTML = price_humanize(0)
   } else {
-    const sum = ids.reduce((sum, id) => sum + (cart.itemsAmount[id] * cart.items[id]), 0)
+    const sum = ids.reduce((sum, id) => sum + (cart.items[id]['price'] * cart.items[id]['amount']), 0)
     totalSpan.innerHTML = price_humanize(sum)
   }
 

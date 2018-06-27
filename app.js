@@ -10,6 +10,14 @@ let cart = {
 const cartList = document.querySelector('.js-cart-list')
 const cartDOM = document.querySelector('.js-cart')
 
+showSpinner = () => {
+  document.querySelector(".loading-spinner").classList.add('loading')
+}
+
+removeSpinner = () => {
+  document.querySelector(".loading-spinner").classList.remove('loading')
+}
+
 handleMenu = () => {
   document.querySelector('.header').classList.toggle('open')
   cartDOM.classList.remove('cart--visible')
@@ -32,6 +40,7 @@ removeFromLocalStorage = (catId) => {
 }
 
 requestItems = () => {
+  showSpinner()
   const request = new XMLHttpRequest();
   request.open(
     'GET',
@@ -44,6 +53,7 @@ requestItems = () => {
       querySetting.page += 1;
       createItems(data.cats);
       initLazyLoad();
+      removeSpinner();
     }
   };
 

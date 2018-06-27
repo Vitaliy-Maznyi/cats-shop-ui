@@ -38,6 +38,19 @@ body {
   background: var(--color-lightskyblue);
 }
 
+.loading-spinner {
+  display: none;
+  z-index: 3;
+  width: 100%;
+  text-align: center;
+  font-size: 6rem;
+  color: var(--color-magenta);
+}
+
+.loading-spinner.loading {
+  display: block;
+}
+
 
 .body__wrapper {
     font-size: 1.6rem;

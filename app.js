@@ -10,6 +10,11 @@ let cart = {
 const cartList = document.querySelector('.js-cart-list')
 const cartDOM = document.querySelector('.js-cart')
 
+handleMenu = () => {
+  document.querySelector('.header').classList.toggle('open')
+  cartDOM.classList.remove('cart--visible')
+}
+
 setToLocalStorage = (cat) => {
   let items = cart.items
   items[cat.id] = {}
@@ -71,6 +76,7 @@ createItem = (cat) => {
   if (Object.keys(cart.items).includes(cat.id.toString())) template.classList.add('added')
 
   template.addEventListener("dragstart", handleDragStart);
+  template.addEventListener("dragend", handleDragEnd);
 
   return template;
 }
@@ -231,6 +237,11 @@ handleDragStart = (e) => {
   cartDOM.classList.add('cart--drag-enter')
 }
 
+handleDragEnd = () => {
+  if (!cartDOM.classList.contains('cart--visible')) toggleCart()
+  cartDOM.classList.remove('cart--drag-enter')
+}
+
 handleOverDrop = (e) => {
   e.preventDefault();
   if (e.type !== "drop") {
@@ -256,7 +267,7 @@ const dropTarget = document.querySelector('[data-drop-target]');
 
 dropTarget.addEventListener("dragover", handleOverDrop);
 dropTarget.addEventListener("drop", handleOverDrop);
-
+document.querySelector('.js-toggle-menu').addEventListener('click', handleMenu)
 document.addEventListener("DOMContentLoaded", requestItems)
 document.addEventListener("scroll", loadMore)
 document.addEventListener("scroll", initLazyLoad)
